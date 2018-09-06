@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { GitSearch } from './git-search';
 import { HttpClient } from '@angular/common/http';
+import { GitUsers } from './git-users';
 // importing RxJS .toPromise to have a possibility to convert
 // an Observable received from httpRequest to promise.
 // import 'rxjs/add/operator/toPromise'; // toPromise is not an operator but a method on the Observable class so no need to import it
@@ -8,7 +9,11 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
+
 export class GitSearchService {
+  cachedUsers: Array<{
+    [query: string]: GitUsers
+  }> = [];
   // setting up a cache for first time service injection that will store cached values
   cachedValues: Array<{
     // describing shape of the objects we are going to store in the Array
@@ -36,6 +41,23 @@ export class GitSearchService {
             resolve(response as GitSearch);
           }, (error) => {
             reject(error);
+          });
+        }
+      });
+      return promise;
+    }
+    gitUsersSearch = (query: string): Promise<GitUsers> => {
+      // tslint:disable-next-line:prefer-const
+      let promise = new Promise<GitUsers>((resolve, reject) => {
+        if (this.cachedUsers[query]) {
+          resolve(this.cachedUsers[query]);
+        } else {
+          this.http.get('https://api.github.com/search/users?q=' + query)
+          .toPromise()
+          .then((response) => {
+            resolve (response as GitUsers);
+          }, (error) => {
+            reject (error);
           });
         }
       });

@@ -19,5 +19,10 @@ export class AppComponent implements OnInit {
     }, (error) => {
       alert('Error: ' + error.statusText);
     });
+    this.GitSearchService.gitUsersSearch('marinarumina').then((response) => {
+      alert('Total Users Found: ' + response.total_count);
+    }, (error) => {
+      alert('Error: ' + error.statusText);
+    });
   }
 }
