@@ -46,21 +46,21 @@ export class GitSearchService {
       });
       return promise;
     }
-    gitUsersSearch = (query: string): Promise<GitUsers> => {
-      // tslint:disable-next-line:prefer-const
-      let promise = new Promise<GitUsers>((resolve, reject) => {
-        if (this.cachedUsers[query]) {
-          resolve(this.cachedUsers[query]);
-        } else {
-          this.http.get('https://api.github.com/search/users?q=' + query)
-          .toPromise()
-          .then((response) => {
-            resolve (response as GitUsers);
-          }, (error) => {
-            reject (error);
-          });
-        }
-      });
-      return promise;
-    }
+    // gitUsersSearch = (query: string): Promise<GitUsers> => {
+    //   // tslint:disable-next-line:prefer-const
+    //   let promise = new Promise<GitUsers>((resolve, reject) => {
+    //     if (this.cachedUsers[query]) {
+    //       resolve(this.cachedUsers[query]);
+    //     } else {
+    //       this.http.get('https://api.github.com/search/users?q=' + query)
+    //       .toPromise()
+    //       .then((response) => {
+    //         resolve (response as GitUsers);
+    //       }, (error) => {
+    //         reject (error);
+    //       });
+    //     }
+    //   });
+    //   return promise;
+    // }
 }

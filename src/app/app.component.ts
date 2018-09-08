@@ -14,15 +14,10 @@ export class AppComponent implements OnInit {
   }
   title = 'GitHub Browser';
   ngOnInit() {
-    this.GitSearchService.gitSearch('angular').then((response) => {
-      alert('Total Libraries Found: ' + response.total_count);
-    }, (error) => {
-      alert('Error: ' + error.statusText);
-    });
-    this.GitSearchService.gitUsersSearch('marinarumina').then((response) => {
-      alert('Total Users Found: ' + response.total_count);
-    }, (error) => {
-      alert('Error: ' + error.statusText);
-    });
+    // this.GitSearchService.gitUsersSearch('marinarumina').then((response) => {
+    //   alert('Total Users Found: ' + response.total_count);
+    // }, (error) => {
+    //   alert('Error: ' + error.statusText);
+    // });
   }
 }
