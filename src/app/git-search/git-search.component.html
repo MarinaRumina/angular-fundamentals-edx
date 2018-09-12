@@ -1,6 +1,6 @@
-<h3>{{title}}</h3>
+<h3>{{title}} - {{displayQuery}}</h3>
 <input name="query" placeholder="Enter Search Keyword Here" [(ngModel)]="searchQuery">
-<button (click)="gitSearch();">Submit</button>
+<button (click)="sendQuery();">Submit</button>
 
 <ng-container *ngIf="searchResults.total_count !== 0; then searchResultsTemplate; else notFoundTemplate"></ng-container>
 <ng-template #searchResultsTemplate>
