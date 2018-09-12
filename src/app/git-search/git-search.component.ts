@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GitSearchService } from '../git-search.service';
 import { GitSearch } from '../git-search';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-git-search',
@@ -13,15 +14,19 @@ export class GitSearchComponent implements OnInit {
   // when doing it above the constructor TypeScript will automatically create a variable scoped for this.
   searchResults: GitSearch;
   searchQuery: string;
+  title: string;
 
   // tslint:disable-next-line:no-shadowed-variable
-  constructor(private GitSearchService: GitSearchService) { }
+  constructor(private GitSearchService: GitSearchService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.GitSearchService.gitSearch(this.searchQuery).then((response) => {
+    this.GitSearchService.gitSearch('angular').then((response) => {
       this.searchResults = response;
     }, (error) => {
       alert('Error: ' + error.statusText);
+    });
+    this.route.data.subscribe( (result) => {
+      this.title = result.title;
     });
   }
 

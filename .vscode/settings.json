@@ -3,6 +3,7 @@
         "gravatar",
         "id",
         "repos",
+        "routerlinkactive",
         "spdx",
         "url"
     ]
