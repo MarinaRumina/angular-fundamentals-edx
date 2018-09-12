@@ -1,22 +1,29 @@
 <input name="query" placeholder="Enter Search Keyword Here" [(ngModel)]="searchQuery">
 <button (click)="gitSearch();">Submit</button>
 
-<div *ngIf="searchResults; else elseBlock">
+<ng-container *ngIf="searchResults.total_count !== 0; then searchResultsTemplate; else notFoundTemplate"></ng-container>
+<ng-template #searchResultsTemplate>
+    <div *ngIf="searchResults; else loadingBlock">
 
-    <h3 class="total">Total Results: {{searchResults.total_count}}</h3>
+        <h3 class="total">Total Results: {{searchResults.total_count}}</h3>
 
-    <ul class="list">
-        <li [ngStyle]="{'background-color': (i % 2 === 0) ? 'silver' : 'white'}" class="list_item" *ngFor="let result of searchResults.items; index as i;">
-            <a [href]="result.html_url">
-                <img class="avatar" [src]="result.owner.avatar_url" alt="">
-                <h4 class="title">{{result.name}}
-                    <small>by {{result.owner.login | uppercase}}</small>
-                </h4>
-            </a>
-            <p class="description"> {{result.description}}</p>
-            <p>Created On: {{result.created_at | date:'fullDate'}}</p>
-        </li>
-    </ul>
+        <ul class="list">
+            <li [ngClass]="{'background-silver': (i % 2 === 0)}" class="list_item" *ngFor="let result of searchResults.items; index as i;">
+                <a [href]="result.html_url">
+                    <img class="avatar" [src]="result.owner.avatar_url" alt="">
+                    <h4 class="title">{{result.name}}
+                        <small>by {{result.owner.login | uppercase}}</small>
+                    </h4>
+                </a>
+                <p class="description"> {{result.description}}</p>
+                <p>Created On: {{result.created_at | date:'fullDate'}}</p>
+            </li>
+        </ul>
+    </div>
+</ng-template>
 
-</div>
-<ng-template #elseBlock>Loading...</ng-template>
+<ng-template #notFoundTemplate>
+    <h3>No Data Found :( Try Another Request.</h3>
+</ng-template>
+
+<ng-template #loadingBlock>Loading...</ng-template>
